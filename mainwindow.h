@@ -17,6 +17,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void updatespeed(const QByteArray &data);
+
 private:
     Ui::MainWindow *ui;
 };
