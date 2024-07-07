@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>716</width>
-    <height>511</height>
+    <width>728</width>
+    <height>392</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -151,7 +151,14 @@
         <item>
          <layout class="QGridLayout" name="gridLayout">
           <item row="2" column="3">
-           <widget class="QLCDNumber" name="lcdNumber_gongLv"/>
+           <widget class="QLCDNumber" name="lcdNumber_gongLv">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
           </item>
           <item row="1" column="1">
            <widget class="QLabel" name="label_2">
@@ -184,7 +191,14 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLCDNumber" name="lcdNumber_xiangDianLiu"/>
+           <widget class="QLCDNumber" name="lcdNumber_xiangDianLiu">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
           </item>
           <item row="4" column="0">
            <widget class="QLabel" name="label_12">
@@ -245,13 +259,27 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLCDNumber" name="lcdNumber_muDianLiu"/>
+           <widget class="QLCDNumber" name="lcdNumber_muDianLiu">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
           </item>
           <item row="4" column="1" colspan="3">
            <widget class="QComboBox" name="comboBox"/>
           </item>
           <item row="2" column="2">
-           <widget class="QLCDNumber" name="lcdNumber_dianYa"/>
+           <widget class="QLCDNumber" name="lcdNumber_dianYa">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -271,9 +299,6 @@
         </item>
         <item>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="1">
-           <widget class="QComboBox" name="comboBox_2"/>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_10">
             <property name="text">
@@ -281,8 +306,31 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
+          <item row="3" column="0" colspan="2">
            <widget class="QPlainTextEdit" name="plainTextEdit"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="comboBox_car"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>油门开度(%)：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" rowspan="2">
+           <widget class="QDial" name="dial">
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLCDNumber" name="lcdNumber_youMen"/>
           </item>
          </layout>
         </item>
@@ -297,7 +345,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>716</width>
+     <width>728</width>
      <height>17</height>
     </rect>
    </property>

@@ -19,8 +19,11 @@ public:
 
 private slots:
     void updatelcdnumber(const QByteArray &data);
+    void onComboBoxCarChanged(int index);
+    void onDailChanged(int value);
 
 private:
     Ui::MainWindow *ui;
+    int min = 0,max = 0;
 };
 #endif // MAINWINDOW_H
