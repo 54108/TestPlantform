@@ -18,7 +18,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void updatespeed(const QByteArray &data);
+    void updatelcdnumber(const QByteArray &data);
 
 private:
     Ui::MainWindow *ui;

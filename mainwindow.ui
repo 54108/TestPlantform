@@ -43,7 +43,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLCDNumber" name="lcdNumber_zhuansu"/>
+                 <widget class="QLCDNumber" name="lcdNumber_zhuanSu"/>
                 </item>
                </layout>
               </item>
@@ -69,7 +69,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLCDNumber" name="lcdNumber_4"/>
+                 <widget class="QLCDNumber" name="lcdNumber_lunZhuanSu"/>
                 </item>
                </layout>
               </item>
@@ -99,7 +99,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLCDNumber" name="lcdNumber_5"/>
+                 <widget class="QLCDNumber" name="lcdNumber_zhouNiuJv"/>
                 </item>
                </layout>
               </item>
@@ -125,7 +125,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLCDNumber" name="lcdNumber_6"/>
+                 <widget class="QLCDNumber" name="lcdNumber_jiaSuDu"/>
                 </item>
                </layout>
               </item>
@@ -150,26 +150,23 @@
         </item>
         <item>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="1" column="3">
-           <widget class="QLabel" name="label_8">
+          <item row="2" column="3">
+           <widget class="QLCDNumber" name="lcdNumber_gongLv"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_2">
             <property name="font">
              <font>
               <pointsize>12</pointsize>
              </font>
             </property>
             <property name="text">
-             <string>功率（kw）：</string>
+             <string>相电流（A）：</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QLCDNumber" name="lcdNumber_8"/>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLCDNumber" name="lcdNumber_7"/>
           </item>
           <item row="3" column="0" colspan="2">
            <widget class="QLabel" name="label_9">
@@ -186,24 +183,13 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLCDNumber" name="lcdNumber"/>
-          </item>
           <item row="2" column="1">
-           <widget class="QLCDNumber" name="lcdNumber_2"/>
+           <widget class="QLCDNumber" name="lcdNumber_xiangDianLiu"/>
           </item>
-          <item row="3" column="2" colspan="2">
-           <widget class="QLCDNumber" name="lcdNumber_9"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_2">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_12">
             <property name="text">
-             <string>相电流（A）：</string>
+             <string>串口：</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -225,6 +211,9 @@
             </property>
            </widget>
           </item>
+          <item row="3" column="2" colspan="2">
+           <widget class="QLCDNumber" name="lcdNumber_xiaoLv"/>
+          </item>
           <item row="1" column="2">
            <widget class="QLabel" name="label_7">
             <property name="font">
@@ -240,18 +229,29 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1" colspan="3">
-           <widget class="QComboBox" name="comboBox"/>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_12">
+          <item row="1" column="3">
+           <widget class="QLabel" name="label_8">
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
             <property name="text">
-             <string>串口：</string>
+             <string>功率（kw）：</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLCDNumber" name="lcdNumber_muDianLiu"/>
+          </item>
+          <item row="4" column="1" colspan="3">
+           <widget class="QComboBox" name="comboBox"/>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLCDNumber" name="lcdNumber_dianYa"/>
           </item>
          </layout>
         </item>
@@ -267,32 +267,21 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayoutRight">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_9">
-          <item>
-           <widget class="QLabel" name="label_10">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>设置</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <layout class="QHBoxLayout" name="horizontalLayout_9"/>
         </item>
         <item>
          <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="1">
+           <widget class="QComboBox" name="comboBox_2"/>
+          </item>
           <item row="0" column="0">
-           <widget class="QLabel" name="label_11">
+           <widget class="QLabel" name="label_10">
             <property name="text">
-             <string>自定义</string>
+             <string>选择车辆类型：</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item row="1" column="0" colspan="2">
            <widget class="QPlainTextEdit" name="plainTextEdit"/>
           </item>
          </layout>

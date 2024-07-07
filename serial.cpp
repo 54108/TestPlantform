@@ -1,5 +1,4 @@
 #include "serial.h"
-#include "mainwindow.h"
 
 SerialThread::SerialThread(QObject *parent) : QThread(parent){};
 
@@ -35,6 +34,6 @@ void SerialThread::run() {
             QThread::msleep(50);
         }
     } else {
-        qFatal("无法打开串口！");
+        qWarning("无法打开串口！");
     }
 }
