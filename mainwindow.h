@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "serial.h"
+#include "chart.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -15,15 +17,20 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void updatelcdnumber(const QByteArray &data);
     ~MainWindow();
 
 private slots:
-    void updatelcdnumber(const QByteArray &data);
+    void resolveData(const QByteArray &data);
     void onComboBoxCarChanged(int index);
     void onDailChanged(int value);
 
 private:
     Ui::MainWindow *ui;
-    int min = 0,max = 0;
+    SerialThread *serialThread;
+    volatile int min = 0, max = 0, speed = 0;
+    volatile float wheelSpeed = 0, axisTorque = 0, acceleration = 0, busCurrent = 0, busVoltage = 0, phaseCurrent = 0, phaseVoltage = 0, power = 0, efficiency = 0;
+    const QByteArray signal = QByteArray("\x77\x01\x3C\x22", 4);
+    QByteArray ctrl = QByteArray("\x77\x01\x3C\x22", 4);
 };
 #endif // MAINWINDOW_H

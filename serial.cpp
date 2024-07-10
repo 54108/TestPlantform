@@ -37,3 +37,8 @@ void SerialThread::run() {
         qWarning("无法打开串口！");
     }
 }
+
+void SerialThread::sendData(const QByteArray &data)
+{
+    serial->write(data);
+}

@@ -1,8 +1,8 @@
 #include <QDir>
 #include <QMessageBox>
+#include <QSemaphore>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "serial.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,8 +10,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    SerialThread *serialThread = new SerialThread();
-    QSerialPort *sp =new QSerialPort(this);
+    // 折线图相关
+    chart* linechart = new chart;
+
+    // 串口相关
+    serialThread = new SerialThread();
+    QSerialPort* sp =new QSerialPort(this);
     QList<QSerialPortInfo> serialPortList=QSerialPortInfo::availablePorts();
 
     if(serialPortList.isEmpty()){
@@ -27,18 +31,65 @@ MainWindow::MainWindow(QWidget *parent)
     serialThread->init(sp);
     serialThread->start();
 
+    connect(serialThread, &SerialThread::readydata, this, &MainWindow::resolveData);
     connect(serialThread, &SerialThread::readydata, this, &MainWindow::updatelcdnumber);
     connect(ui->comboBox_car, SIGNAL(currentIndexChanged(int)), this, SLOT(onComboBoxCarChanged(int)));
     connect(ui->dial, &QDial::valueChanged, this, &MainWindow::onDailChanged);
+    connect(ui->dial, &QDial::valueChanged, linechart, &chart::test);
 
     QDir dir("C:/config");
     QStringList files = dir.entryList(QDir::Files); // 获取文件夹内所有文件
     ui->comboBox_car->addItems(files);
+
+    ui->cView->setChart(linechart->m_chart);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::resolveData(const QByteArray &data)
+{
+    QStringList parts = QString(data).split(","); // 使用,分割字符串
+    if (!data.isEmpty() && (parts[0].toUInt() == 77))
+    {
+        switch(parts[1].toUInt())
+        {
+        case 1:
+            if((parts[2].toUInt() == 3) && (parts[3].toUInt() == 22))
+                serialThread->sendData(signal);
+            break;
+        case 2:
+            if(parts[3].toUInt() == 22)
+            {
+                if(parts[2].toUShort() & 80)
+                    QMessageBox::critical(this,"错误!","motorEN is not ready!");
+                if(parts[2].toUShort() & 40)
+                    QMessageBox::critical(this,"错误!","steeringEN is not ready!");
+                if(parts[2].toUShort() & 20)
+                    QMessageBox::critical(this,"错误!","voltage is not normal!");
+            }
+            break;
+        case 3:
+            if(parts[15].toUInt() == 22)
+            {
+                speed = parts[2].toUInt();
+                axisTorque = parts[3].toUInt();
+                busCurrent = parts[4].toUInt();
+                busVoltage = parts[5].toUInt();
+                phaseCurrent = parts[6].toUInt();
+                phaseVoltage = parts[7].toUInt();
+            }
+            break;
+        case 4:
+            if(parts[4].toUInt() == 22)
+                serialThread->sendData(ctrl);
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 void MainWindow::updatelcdnumber(const QByteArray &data)
@@ -48,22 +99,27 @@ void MainWindow::updatelcdnumber(const QByteArray &data)
     QLCDNumber* laxisTorque = ui->lcdNumber_zhouNiuJv;
     QLCDNumber* lacceleration = ui->lcdNumber_jiaSuDu;
     QLCDNumber* lbusCurrent = ui->lcdNumber_muDianLiu;
-    QLCDNumber* lphaseCurrent = ui->lcdNumber_xiangDianLiu;
-    QLCDNumber* lvoltage = ui->lcdNumber_dianYa;
+    QLCDNumber* lphaseCurrent = ui->lcdNumber_xianDianLiu;
+    QLCDNumber* lbusVoltage = ui->lcdNumber_muDianYa;
+    QLCDNumber* lphaseVoltage = ui->lcdNumber_xianDianYa;
     QLCDNumber* lpower = ui->lcdNumber_gongLv;
     QLCDNumber* lefficiency = ui->lcdNumber_xiaoLv;
 
-    int speed;
-    float wheelSpeed,axisTorque,acceleration,busCurrent,phaseCurrent,voltage,power,efficiency;
-
     wheelSpeed = speed * 123;
     acceleration = axisTorque * 123 / 456;
-    power = phaseCurrent * voltage;
-    efficiency = power / busCurrent / 380;
+    power = phaseCurrent * phaseVoltage;
+    efficiency = power / busCurrent / busVoltage;
 
-
-    lspeed->display(data);
-    lwheelSpeed->display(data);
+    lspeed->display(speed);
+    lwheelSpeed->display(wheelSpeed);
+    laxisTorque->display(axisTorque);
+    lacceleration->display(acceleration);
+    lbusCurrent->display(busCurrent);
+    lphaseCurrent->display(phaseCurrent);
+    lbusVoltage->display(phaseVoltage);
+    lphaseVoltage->display(phaseVoltage);
+    lpower->display(power / 1000);
+    lefficiency->display(efficiency);
 }
 
 void MainWindow::onComboBoxCarChanged(int index) {
@@ -95,15 +151,16 @@ void MainWindow::onComboBoxCarChanged(int index) {
             ;
         } else {
             // 转换失败的处理
-            qDebug() << "转换失败";
+            QMessageBox::warning(this, "读取文件", "转换失败！");
         }
     } else {
         // 分割结果不是两部分的处理
-        qDebug() << "格式错误";
+        QMessageBox::warning(this, "读取文件", "格式错误！");
     }
 }
 
 void MainWindow::onDailChanged(int value)
 {
     ui->lcdNumber_youMen->display(value);
+    serialThread->sendData(signal);
 }
