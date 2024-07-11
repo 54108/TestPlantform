@@ -6,7 +6,7 @@ void SerialThread::init(QSerialPort * sp)
 {
     // 配置串口参数
     serial = sp;
-    serial->setPortName("com3");
+    serial->setPortName("COM17");
     serial->open(QIODevice::ReadWrite);
     serial->setBaudRate(QSerialPort::Baud115200);
     serial->setDataBits(QSerialPort::Data8);

@@ -351,6 +351,9 @@
             <item row="0" column="0">
              <widget class="QChartView" name="cView"/>
             </item>
+            <item row="1" column="0">
+             <widget class="QTextBrowser" name="textBrowser"/>
+            </item>
            </layout>
           </item>
           <item row="2" column="0" rowspan="2" colspan="2">

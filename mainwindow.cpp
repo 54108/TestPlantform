@@ -51,8 +51,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::resolveData(const QByteArray &data)
 {
+    quint8 temp[4] = {};
+    float floatData;
     QStringList parts = QString(data).split(","); // 使用,分割字符串
-    if (!data.isEmpty() && (parts[0].toUInt() == 77))
+    if (!data.isEmpty() && (parts[0].toUInt() == 1))
     {
         switch(parts[1].toUInt())
         {
@@ -72,15 +74,14 @@ void MainWindow::resolveData(const QByteArray &data)
             }
             break;
         case 3:
-            if(parts[15].toUInt() == 22)
-            {
-                speed = parts[2].toUInt();
-                axisTorque = parts[3].toUInt();
-                busCurrent = parts[4].toUInt();
-                busVoltage = parts[5].toUInt();
-                phaseCurrent = parts[6].toUInt();
-                phaseVoltage = parts[7].toUInt();
-            }
+            temp[3] = parts[3].toUInt(nullptr, 16);
+            temp[2] = parts[4].toUInt(nullptr, 16);
+            temp[1] = parts[5].toUInt(nullptr, 16);
+            temp[0] = parts[6].toUInt(nullptr, 16);
+            // ui->textBrowser->setText(parts[3] + parts[4] + parts[5] + parts[6]);
+            memcpy(&floatData, temp, 4);
+            ui->textBrowser->setText(QString::number(double(floatData)));
+            busCurrent = floatData;
             break;
         case 4:
             if(parts[4].toUInt() == 22)
